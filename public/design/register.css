@@ -1,0 +1,53 @@
+.login-box-msg{
+  color:lightseagreen;
+  font-size:18px
+}
+.side{
+  background: lightseagreen;
+  padding: 15px;
+  color: #fff;
+  border-radius: 0 15px 15px 0;
+  font-size: 14px;
+}
+.side p{
+  font-size: 14px;
+  margin-top: 20px;
+}
+.side span{
+  font-size: 12px;
+  margin-top: 10%;
+  color: #eee;
+}
+.side button{
+  border-radius: 20px;
+  background: lightseagreen;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 4px;
+  width: 140px;
+  margin-top: 20px;
+}
+.side button a{
+  color: #fff;
+}
+@media(max-width:767px){
+  .side button{
+    max-width: 100px;
+    font-size: 12px;
+  }
+}
+.side button a:hover{
+  /*border: 1px solid lightseagreen;*/
+  color: lightseagreen;
+}
+.login-box-body button{
+   margin-top: 10px;
+   border-radius: 20px;
+   width: 100%;
+   background: lightseagreen;
+   color: white;
+   padding: 4px;
+ }
+ .login-box-body button:hover{
+    color: white;
+ }

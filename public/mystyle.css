@@ -1,0 +1,77 @@
+.header
+{
+    top: 0;
+}
+
+.container
+{
+    padding: 0 ;
+}
+
+.text-right
+{
+    height: 60px;
+    padding: 0;
+}
+
+.logo_container
+{
+    height:60px;
+    left: 10px;
+}
+
+.logo_container img
+{
+    height: 60px;
+    width: 80px;
+}
+
+.navbar
+{
+    height: 60px;
+}
+
+.footer
+{
+    background:#222;
+    text-align: right;
+}
+
+/* start copy */
+.copy-Right{
+	height:auto ;
+	background:rgb(0,0,0) ;
+	text-align:center ;
+	font-family:Gaegu ;
+  bottom:0;
+   width:100%;
+   display:block;
+}
+.copy-Right h5 {
+	color:#ccc ;
+	margin:0 ;
+	padding:5px ;
+}
+/* end copy */
+
+.btn-primary
+{
+    background: lightseagreen ;
+    border: lightseagreen ;
+}
+
+.btn-primary:hover
+{
+    background: lightseagreen ;
+    border: lightseagreen ;
+}
+
+.login-box-body .form-control-feedback, .register-box-body .form-control-feedback
+{
+    /*color: lightseagreen ;*/
+}
+
+a
+{
+    color: lightseagreen ;
+}
