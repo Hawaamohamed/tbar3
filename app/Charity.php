@@ -30,4 +30,15 @@ class Charity extends Authenticatable
         return $this->hasMany("App\Post","charity_id","id");
     }
 
+    public function donors()
+    {
+        return $this->belongsToMany('App\Donor','donors_charities','charityid','donorid');
+    }
+
+    public function followings()
+    {
+      return $this->belongsToMany('App\Donor','charity__charities');
+    }
+
+
 }

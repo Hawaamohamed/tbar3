@@ -7,9 +7,11 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Charity' => $baseDir . '/app/Charity.php',
+    'App\\Charity_Charity' => $baseDir . '/app/Charity_Charity.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Donor' => $baseDir . '/app/Donor.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Follow' => $baseDir . '/app/Follow.php',
     'App\\Http\\Controllers\\APIController' => $baseDir . '/app/Http/Controllers/APIController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
     'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',
@@ -22,6 +24,7 @@ return array(
     'App\\Http\\Controllers\\UpdataDataCharity' => $baseDir . '/app/Http/Controllers/UpdataDataCharity.php',
     'App\\Http\\Controllers\\charityController' => $baseDir . '/app/Http/Controllers/charityController.php',
     'App\\Http\\Controllers\\donorController' => $baseDir . '/app/Http/Controllers/donorController.php',
+    'App\\Http\\Controllers\\followingsController' => $baseDir . '/app/Http/Controllers/followingsController.php',
     'App\\Http\\Controllers\\photosController' => $baseDir . '/app/Http/Controllers/photosController.php',
     'App\\Http\\Controllers\\postsController' => $baseDir . '/app/Http/Controllers/postsController.php',
     'App\\Http\\Controllers\\tbar3Controller' => $baseDir . '/app/Http/Controllers/tbar3Controller.php',
@@ -44,6 +47,7 @@ return array(
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
     'App\\User' => $baseDir . '/app/User.php',
+    'App\\donors_charities' => $baseDir . '/app/donors_charities.php',
     'BeyondCode\\DumpServer\\DumpServerCommand' => $vendorDir . '/beyondcode/laravel-dump-server/src/DumpServerCommand.php',
     'BeyondCode\\DumpServer\\DumpServerServiceProvider' => $vendorDir . '/beyondcode/laravel-dump-server/src/DumpServerServiceProvider.php',
     'BeyondCode\\DumpServer\\Dumper' => $vendorDir . '/beyondcode/laravel-dump-server/src/Dumper.php',

@@ -259,6 +259,13 @@ span#donation:hover{
   margin:50px auto;
   padding:50px auto;
 }
+.modal {
+  background: rgba(3,3,3,.1);
+}
+ [type=submit]{
+   -webkit-appearance: none;
+ }
+
 /**************Media Query***************/
 @media(max-width:720px)
 {

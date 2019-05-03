@@ -1,4 +1,5 @@
 @include('navbar')
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -11,6 +12,9 @@
 }
 .modal {
   background: rgba(3,3,3,.1);
+}
+.name{
+  margin: 5px auto;
 }
   @media(max-width: 575px) {
     .charity {
@@ -28,33 +32,51 @@
 </style>
 
 <div style="background: #ccc;margin-top:60px;min-height:474px;">
-  <div class="row"><div class="col-xs-offset-2 col-xs-6 hidden-sm hidden-md hidden-lg" style="padding:0;margin:0"><button class="btn btn-flat charity_chat charity_chat_xs" aria-hidden="true" href="#charities_model" type="" data-id="PostId" data-toggle="modal" style="color:#fff;background:#cdd20a;padding-left: 7px;cursor: pointer;margin-left: 10px;font-size:20px;position:fixed">Chating</button></div></div>
+  <div class="row">
+    <div class="col-xs-offset-2 col-xs-6 hidden-sm hidden-md hidden-lg" style="padding:0;margin:0">
+    @if(session()->has('donor_id') || session()->has('charity_id'))
+      <button class="btn btn-flat charity_chat charity_chat_xs" aria-hidden="true" href="#charities_model" type="" data-id="PostId" data-toggle="modal" style="color:#fff;background:#cdd20a;padding-left: 7px;cursor: pointer;margin-left: 10px;font-size:20px;position:fixed">Chating</button>
+    @else
+      <a  href="{{url('/login')}}" class="btn btn-info btn-block btn-flat" style="color:#fff">Chat</a>
+    @endif
+    </div></div>
+
   <div class="row" style="background: #ccc;margin-top:60px;min-height:474px;">
-  <!--*****************Start his charities****************-->
+  <!--*****************Start his Followings****************-->
     <div class="col-md-3 col-sm-3 hidden-xs" style=" padding:0">
      <div class="panel panel-default chat" style="overflow:auto;padding:0;position: fixed;width: 25%;border-radius:20px;left: 5px;">
 
       <div class="panel-body chat_body" style="margin-bottom:0px;top:0px;">
-       @foreach($charities as $charity)
-        <div style="cursor:pointer">
+     @if(session()->has('donor_id') || session()->has('charity_id'))
+      @if(empty($followings[0]))
+         <div class="alert alert-primary text-center">يمكنك متابعة الجمعيات والتواصل معهم لمساعدة الحالات</div>
+      @else
+       @foreach($followings as $charity)
           <div class="row">
           <div class="col-sm-1" style="padding:0;margin:0"><i class="fa fa-comment charity_chat" aria-hidden="true" href="#charities_model" type="" data-id="PostId" data-toggle="modal" style="color:#cdd20a;padding-left: 7px;cursor: pointer;margin-left: 5px;font-size:20px"></i></div>
           <div class="col-sm-8 name"  style=" text-align: center;padding-right: 5px;">
+           <a href="{{ url('/profile/'. $charity->id )}}">
             <span class="chat_charity_name pull-right" style="font-size:11px"><b>{{$charity->name}}</b></span>
+           </a>
           </div>
           <div class="col-sm-3 img" style="padding-left: 5px;">
-            <img src="{{asset('avatar/'.$charity->profile)}}">
+            <a href="{{ url('/profile/'. $charity->id )}}">
+            <img src="{{asset('avatar/'.$charity->profile)}}" style="height:35px;width:100%">
+            </a>
           </div>
-        </div><hr>
         </div>
+      <hr>
       @endforeach
+     @endif
+    @else
+     <a  href="{{url('/login')}}" class="" style="color:#fff"><div class="alert alert-primary text-center">يمكنك متابعة الجمعيات والتواصل معهم لمساعدة الحالات</div></a>
+    @endif
 
       </div>
 
       <!--end hidden-->
      </div>
     </div>
-
 
     <!--*************Start Posts******************************-->
     <div style="height:auto" class='col-md-6 col-sm-12 col-xs-12 div1'>
@@ -65,14 +87,14 @@
           {{ session()->forget('price') }}
           {{ session()->forget('donate') }}
         </div>
-      @endif
-            @if( session()->has('fail') )
-                <div class="alert alert-danger">
-                    <h5 style="text-align: right" >تم التبرع بنجاح</h5>
-                    {{ session()->forget('price') }}
-                    {{ session()->forget('donate') }}
-                </div>
-            @endif
+        @endif
+        @if( session()->has('fail') )
+            <div class="alert alert-danger">
+                <h5 style="text-align: right" >تم التبرع بنجاح</h5>
+                {{ session()->forget('price') }}
+                {{ session()->forget('donate') }}
+            </div>
+         @endif
 
         <section style="margin-left: 10px;" class="oldPosts">
             @foreach($posts as $post)
@@ -154,29 +176,74 @@
         </section>
 
     </div>
-    <!--************************End Post**********************-->
+    <!--************************End Post********************-->
 
     <!--*****************Start All Charities****************-->
     <div class="col-md-3 col-sm-3 hidden-xs">
      <div class="panel panel-default " style="position: fixed;width: 24.2%;border-radius:20px;right: 5px;">
       <div class="panel-body charities" style="margin-bottom:0px;top:0px;overflow:auto;">
-        @foreach( $charities as $ch )
-        @if( $ch->id != session()->get("charity_id"))
-        <div class="row" style="margin-bottom:15px">
-          <div class="col-sm-1" style="padding:0;margin:0"><i class="fa fa-plus" style="color:rgb(40, 184, 185);padding: 7px;cursor: pointer;border-radius: 2px;margin-left: 5px;background:#ddd"></i></div>
-          <div class="col-sm-8 name" style=" text-align: center;">
-           <a href="{{ url('/profile/'. $ch->id )}}">
-            <span class="chat_charity_name pull-right" style="font-size:11px"><b>{{$ch->name}}</b></span>
-           </a>
+       @if(session()->has('charity_id'))
+          @foreach( $charities as $ch )
+          @if($ch->id != session()->get("charity_id") && !App\Charity_charity::where(['followingid'=>session('charity_id'),'charityid'=>$ch->id])->exists())
+          <div class="row" style="margin-bottom:15px">
+            <div class="col-sm-1" style="padding:0;margin:0"><form method="post" id="form_follow" action="{{url('/needy/persons/follow/')}}">{{csrf_field()}}
+              <input type="hidden" class="charityid" name='charityid' value="{{$ch->id}}"><input type="hidden" name="sessionid" class='sessionid' value=''><input type="hidden" name="status" class='status' value=''>
+              <i type="submit" class="fa fa-plus" style="color:rgb(40, 184, 185);padding: 7px;cursor: pointer;border-radius: 2px;margin-left: 5px;background:#ddd"></i>
+            </form></div>
+            <div class="col-sm-8 name" style=" text-align: center;">
+             <a href="{{ url('/profile/'. $ch->id )}}">
+              <span class="chat_charity_name pull-right" style="font-size:11px"><b>{{$ch->name}}</b></span>
+             </a>
+            </div>
+            <div class="col-sm-3 img" style="padding-left: 5px;">
+              <a href="{{ url('/profile/'. $ch->id )}}">
+                <img src="{{asset('avatar/'.$ch->profile)}}" style="height:40px;width:100%">
+              </a>
+           </div>
           </div>
-          <div class="col-sm-3 img" style="padding-left: 5px;">
-            <a href="{{ url('/profile/'. $ch->id )}}">
-             <img src="{{asset('avatar/'.$ch->profile)}}">
-            </a>
-         </div>
-        </div>
+          @endif
+          @endforeach
+        @elseif(session()->has('donor_id'))
+           @foreach($charities as $ch)
+           @if(!App\donors_charities::where('charityid', $ch->id)->exists())
+           <div class="row" style="margin-bottom:15px">
+             <div class="col-sm-1" style="padding:0;margin:0"><form method="post" id="form_follow" action="{{url('/needy/persons/follow/')}}">{{csrf_field()}}
+               <input type="hidden" class="charityid" name='charityid' value="{{$ch->id}}"><input type="hidden" name="sessionid" class='sessionid' value=''><input type="hidden" name="status" class='status' value=''>
+               <i type="submit" class="fa fa-plus" style="color:rgb(40, 184, 185);padding: 7px;cursor: pointer;border-radius: 2px;margin-left: 5px;background:#ddd"></i>
+             </form></div>
+             <div class="col-sm-8 name" style=" text-align: center;">
+              <a href="{{ url('/profile/'. $ch->id )}}">
+               <span class="chat_charity_name pull-right" style="font-size:11px"><b>{{$ch->name}}</b></span>
+              </a>
+             </div>
+             <div class="col-sm-3 img" style="padding-left: 5px;">
+               <a href="{{ url('/profile/'. $ch->id )}}">
+                 <img src="{{asset('avatar/'.$ch->profile)}}" style="height:40px;width:100%">
+               </a>
+            </div>
+           </div>
+           @endif
+           @endforeach
+        @else
+          @foreach( $charities as $ch )
+          <div class="row" style="margin-bottom:15px">
+            <div class="col-sm-1" style="padding:0;margin:0"><form method="post" id="form_follow" action="{{url('/needy/persons/follow/')}}">{{csrf_field()}}
+              <input type="hidden" class="charityid" name='charityid' value="{{$ch->id}}"><input type="hidden" name="sessionid" class='sessionid' value=''><input type="hidden" name="status" class='status' value=''>
+              <i type="submit" class="fa fa-plus" style="color:rgb(40, 184, 185);padding: 7px;cursor: pointer;border-radius: 2px;margin-left: 5px;background:#ddd"></i>
+            </form></div>
+            <div class="col-sm-8 name" style=" text-align: center;">
+             <a href="{{ url('/profile/'. $ch->id )}}">
+              <span class="chat_charity_name pull-right" style="font-size:11px"><b>{{$ch->name}}</b></span>
+             </a>
+            </div>
+            <div class="col-sm-3 img" style="padding-left: 5px;">
+              <a href="{{ url('/profile/'. $ch->id )}}">
+                <img src="{{asset('avatar/'.$ch->profile)}}" style="height:40px;width:100%">
+              </a>
+           </div>
+          </div>
+          @endforeach
         @endif
-        @endforeach
        </div>
       </div>
      </div>
@@ -232,15 +299,19 @@
                             <div class='row'>
                              <div class='col-sm-5 col-xs-12' style="border-right:3px solid #ccc;overflow: auto;height:350px;">
                                <div class="panel-body chat_body" style="margin-bottom:0px;top:0px;">
-                                @foreach($charities as $charity)
+                                @foreach($followings as $charity)
                                  <div style="cursor:pointer">
                                    <div class="row">
                                    <div class="col-sm-1 col-xs-2" style="padding:0;margin:0"><i class="fa fa-comment charity_chat" style="color:#cdd20a;padding-left: 7px;cursor: pointer;margin-left: 5px;font-size:20px"></i></div>
                                    <div class="col-sm-8 col-xs-7 name">
+                                    <a href="{{ url('/profile/'. $charity->id )}}">
                                      <span class="chat_charity_name pull-right" style="font-size:11px"><b>{{$charity->name}}</b></span>
+                                   </a>
                                    </div>
                                    <div class="col-sm-3 col-xs-3 img">
-                                     <img src="{{asset('avatar/'.$charity->profile)}}">
+                                    <a href="{{ url('/profile/'. $charity->id )}}">
+                                     <img src="{{asset('avatar/'.$charity->profile)}}" style="height:35px;width:100%">
+                                    </a>
                                    </div>
                                  </div><hr>
                                  </div>
@@ -294,24 +365,55 @@
   });
 </script>
 
-
-      <script>
-      $(document).ready(function(){
+<script>
+$(document).ready(function(){
 
   ///Follow
   $(".fa-plus").click(function(){
-    $(this).removeClass('fa-plus').addClass('fas fa-check');
-    $(this).parent().parent('.row').fadeOut(1400);
+
+     @if(session()->has('charity_id'))
+      {{$session_id = session('charity_id')}}
+       var status = "charity";
+     @elseif(session()->has('donor_id'))
+       {{$session_id = session('donor_id')}}
+        var status = "donor";
+     @else
+      window.location='/login';
+     {{$session_id = 0}}
+     @endif
+    var session_id = {{$session_id}};
+    $(this).siblings("input.sessionid").val({{$session_id}});
+    $(this).siblings("input.status").val(status);
+    var form = $(this).parent("#form_follow").serialize();
+    var url = $("#form_follow").attr('action');
+    var thiss=$(this);
+    $.ajax({
+      url:url,
+      method:"POST",
+      data:form,
+      type:"post",
+      dataType:'JSON',
+      success:function(data)
+      {
+        if(session_id !=0 ){
+        thiss.removeClass('fa-plus').addClass('fas fa-check');
+        thiss.parent().parent().parent('.row').fadeOut(1200).css("transition","all .1s ease-in-out");
+        /*$(".chat_body").append("<div class='row hidden_following'><div class='col-sm-1' style='padding:0;margin:0'><i class='fa fa-comment charity_chat' aria-hidden='true' href='#charities_model' data-id='PostId' data-toggle='modal' style='color:#cdd20a;padding-left: 7px;cursor: pointer;margin-left: 5px;font-size:20px'></i></div><div class='col-sm-8 name' style='text-align: center;padding-right: 5px;'> <a href='/profile/"+ data.charityid +"'><span class='chat_charity_name pull-right' style='font-size:11px'>"+data.name+"</span></a></div><div class='col-sm-3 img' style='padding-left: 5px;'><a href='/profile/"+ data.charityid +"'><img src='/avatar/"+data.profile+"'></a></div></div><hr>");
+        $(".hidden_following").fadeIn(1200);*/
+      }
+      }
+    })
+
   })
 
       $(".chat").height(window.screen.height/2+84);
       $(".charities").height(window.screen.height/2+50);
 
   $(".charity_chat").on('click',function(){
-      var charityName = $(this).parent().siblings(".name").children(".chat_charity_name").html();
-      var charityImg = $(this).parent().siblings(".img").children().attr('src');
+      var charityName = $(this).parent().siblings(".name").children().children(".chat_charity_name").html();
+      var charityImg = $(this).parent().siblings(".img").children().children().attr('src');
+      $("#message").parent(".panel-footer").removeClass("hidden");
 
-        //$("#appendnewChat").removeClass("hidden");
         $("#appendnewChat").children().children(".panel-heading").children("div:eq(0)").children("span").html(charityName).css('color',"#fff");
         $("#appendnewChat").children().children(".panel-heading").children("div:eq(1)").html("<img src='"+charityImg+"'>");
         $("#appendnewChat img").css({
@@ -324,6 +426,7 @@
   $(".charity_chat_xs").on('click',function(){
     $("#appendnewChat").children().children(".panel-heading").children("div:eq(0)").children("span").html('');
     $("#appendnewChat").children().children(".panel-heading").children("div:eq(1)").html('');
+    $("#message").parent(".panel-footer").addClass("hidden");
   });
 
   $("<i class='fa fa-angle-left'></i>").insertBefore("#message");

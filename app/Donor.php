@@ -19,4 +19,10 @@ class Donor extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    public function charities()
+    {
+        return $this->belongsToMany('App\Charity','donors_charities','donorid','charityid');
+    }
 }

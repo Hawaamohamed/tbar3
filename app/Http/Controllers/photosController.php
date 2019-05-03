@@ -74,7 +74,7 @@ class photosController extends Controller
            $chid = $request->input('charity_id');
            $charity=Charity::find($chid);
            $validation = Validator::make($request->all(), [
-           'select_file' => 'required|image|mimes:jpeg,png,jpg,gif'
+           'select_file' => 'required|image|mimes:jpeg,png,jpg,gif,JPG,PNG,JPEG,GIF'
           ]);
           if($validation->passes())
           {
@@ -116,7 +116,7 @@ class photosController extends Controller
          $chid = $request->input('charity_id');
          $charity=Charity::find($chid);
          $validation = Validator::make($request->all(), [
-         'select_file' => 'required|image|mimes:jpeg,png,jpg,gif'
+         'select_file' => 'required|image|mimes:jpeg,png,jpg,gif,JPG,PNG,JPEG,GIF'
         ]);
         if($validation->passes())
         {

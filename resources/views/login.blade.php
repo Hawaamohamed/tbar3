@@ -1,7 +1,7 @@
 
 
-        @if(session()->has('auth'))
-                <script>window.location = "/home" ;</script>
+               @if(session()->has('auth'))
+                   <script>window.location = "/home" ;</script>
                 @endif
 
 <!DOCTYPE html>
@@ -43,7 +43,7 @@
 
 <div class="login-box">
   <div class="login-logo">
-    <a href="#" style=""><b>TBAR3</b></a>
+    <a href="{{url('/home')}}" style=""><b>TBAR3</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">

@@ -374,9 +374,11 @@ class ComposerStaticInit27a28293e0485f0783c0fe4dbc8fe6d4
 
     public static $classMap = array (
         'App\\Charity' => __DIR__ . '/../..' . '/app/Charity.php',
+        'App\\Charity_Charity' => __DIR__ . '/../..' . '/app/Charity_Charity.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Donor' => __DIR__ . '/../..' . '/app/Donor.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Follow' => __DIR__ . '/../..' . '/app/Follow.php',
         'App\\Http\\Controllers\\APIController' => __DIR__ . '/../..' . '/app/Http/Controllers/APIController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
@@ -389,6 +391,7 @@ class ComposerStaticInit27a28293e0485f0783c0fe4dbc8fe6d4
         'App\\Http\\Controllers\\UpdataDataCharity' => __DIR__ . '/../..' . '/app/Http/Controllers/UpdataDataCharity.php',
         'App\\Http\\Controllers\\charityController' => __DIR__ . '/../..' . '/app/Http/Controllers/charityController.php',
         'App\\Http\\Controllers\\donorController' => __DIR__ . '/../..' . '/app/Http/Controllers/donorController.php',
+        'App\\Http\\Controllers\\followingsController' => __DIR__ . '/../..' . '/app/Http/Controllers/followingsController.php',
         'App\\Http\\Controllers\\photosController' => __DIR__ . '/../..' . '/app/Http/Controllers/photosController.php',
         'App\\Http\\Controllers\\postsController' => __DIR__ . '/../..' . '/app/Http/Controllers/postsController.php',
         'App\\Http\\Controllers\\tbar3Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/tbar3Controller.php',
@@ -411,6 +414,7 @@ class ComposerStaticInit27a28293e0485f0783c0fe4dbc8fe6d4
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
+        'App\\donors_charities' => __DIR__ . '/../..' . '/app/donors_charities.php',
         'BeyondCode\\DumpServer\\DumpServerCommand' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/DumpServerCommand.php',
         'BeyondCode\\DumpServer\\DumpServerServiceProvider' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/DumpServerServiceProvider.php',
         'BeyondCode\\DumpServer\\Dumper' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/Dumper.php',

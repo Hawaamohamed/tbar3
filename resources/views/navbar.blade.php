@@ -8,7 +8,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link rel="icon" href="{{ url("/design/images/1.jpg") }}">
-
     <link rel="stylesheet" href="{{ url("/design/dash/style.css") }}">
 	<link rel="stylesheet" type="text/css" href="{{ url("/design/card/font.css") }}">
 	<link rel="stylesheet" type="text/css" href="{{ url("/design/card/bootstrap.css") }}">

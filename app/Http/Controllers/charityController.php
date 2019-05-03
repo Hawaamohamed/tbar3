@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Charity;
 use App\Donor;
+use App\Follow;
 use App\Mail\ResetPassword;
 use Carbon\Carbon;
 use DB ;
@@ -52,7 +53,7 @@ class charityController extends Controller
                 session()->put('name', $charity->name);
                 session()->put('profile', $charity->profile);
                 return redirect( "/profile/".$id );
-            } else {
+            }else {
                 return back();
             }
         }
@@ -62,7 +63,11 @@ class charityController extends Controller
                 $id = DB::table('donors')->where('email', request('email'))->value('id');
                 session()->put('donor_id', $id);
                 session()->put('auth', 1);
-                return redirect("/needy/persons");
+
+                  $donor = Donor::find($id);
+                  $followings = $donor->charities;
+
+                return redirect("/needy/persons")->with('followings',$followings);
             } else {
                 return back();
             }

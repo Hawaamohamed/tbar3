@@ -25,6 +25,7 @@ Route::post('/register/charity', 'charityController@registerCharity');
 Route::get('/register/user', 'tbar3Controller@registerUser');
 Route::post('/register/user', 'donorController@registerUser');
 
+
 Route::get('/team/info', 'tbar3Controller@aboutUs');
 Route::get('/needy/persons', 'tbar3Controller@needyPersons');
 // reset password
@@ -58,10 +59,10 @@ Route::group( ['middleware' => 'charity' ] , function (){
     Route::post('/deleteImg', 'photosController@deleteImg')->name('deleteImg');
 
 });
+/****************** Follow ****************/
+Route::post('/needy/persons/follow/', 'followingsController@add');
 
 // donor auth
-
-
 /* ************* paypal *********************** */
 Route::post('/paypal' , 'PaymentController@paypal');
 Route::get('/paypal/done' , 'PaymentController@paypalDone') ;

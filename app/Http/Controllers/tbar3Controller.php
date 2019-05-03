@@ -7,6 +7,8 @@ use App\Charity ;
 use App\Images ;
 use App\Donor ;
 use App\Post ;
+use App\donors_charities;
+use App\Charity_charity;
 
 class tbar3Controller extends Controller
 {
@@ -49,11 +51,31 @@ class tbar3Controller extends Controller
         }
         $charities = Charity::all() ;
 
-        return view("needyPersons" ,['posts'=>$posts,'charities'=>$charities] ) ;
+        if(session()->has('donor_id'))
+        {
+          $donor_id = session('donor_id');
+          $donor = Donor::find($donor_id);
+          $followings = $donor->charities;
+        }else if(session()->has('charity_id')){
+          $charity_id = session('charity_id');
+
+          $all_followings_id = Charity_charity::where('followingid',$charity_id)->get();
+          $followings = array();
+          foreach($all_followings_id as $following_id)
+          {
+            $followings[]=Charity::find($following_id->charityid);
+          }
+        }else{
+          $followings=$charities;
+        }
+        return view("needyPersons" ,['posts'=>$posts,'charities'=>$charities,'followings'=>$followings]) ;
     }
+
 
     function codepoint_decode($str) {
         return json_decode(sprintf('"%s"', $str));
     }
-    
+
+
+
 }

@@ -20,12 +20,14 @@
 <script src="{{ url("/design/colo/js/custom.js") }}"></script>
 <script src="{{ url("/design/card/jquery.js") }}"></script>
 <script src="{{ url("/design/card/card.js") }}"></script>
-
+<script src="{{ url("/design/colo/js/wow.min.js") }}"></script>
+<script>new WOW().init();</script>
+<script>
 <script>
 	var textarea = document.querySelector('textarea');
-	
+
 	//textarea.addEventListener('keydown', autosize);
-	
+
 	 $("#file-1").fileinput({
 		 theme:'fa',
 		 uploadUrl:"/image-submit",
@@ -42,7 +44,7 @@
 			 return filename.replace('(','_').replace(']','_');
 		}
 	 });
-	
+
 	</script>
 
 </body>
