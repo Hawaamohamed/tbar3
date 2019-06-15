@@ -16,6 +16,7 @@ class CreateDonorsTable extends Migration
       if(!Schema::hasTable('donors')){
         Schema::create('donors', function (Blueprint $table) {
             $table->increments('id');
+            $table->string("name");
             $table->string('email',191)->unique();
             $table->string('password',191);
             $table->rememberToken();

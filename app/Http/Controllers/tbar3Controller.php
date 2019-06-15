@@ -50,7 +50,7 @@ class tbar3Controller extends Controller
             $post['image'] = $post->images() ;
         }
         $charities = Charity::all() ;
-
+        $donor_follower=array();
         if(session()->has('donor_id'))
         {
           $donor_id = session('donor_id');
@@ -60,15 +60,24 @@ class tbar3Controller extends Controller
           $charity_id = session('charity_id');
 
           $all_followings_id = Charity_charity::where('followingid',$charity_id)->get();
+          $all_follower_donor=donors_charities::where('charityid',$charity_id)->get();
+
           $followings = array();
+          $donor_follower=array();
           foreach($all_followings_id as $following_id)
           {
             $followings[]=Charity::find($following_id->charityid);
           }
+
+            foreach($all_follower_donor as $following_id)
+            {
+                $donor_follower[]=Donor::find($following_id->donorid);
+            }
+
         }else{
           $followings=$charities;
         }
-        return view("needyPersons" ,['posts'=>$posts,'charities'=>$charities,'followings'=>$followings]) ;
+        return view("needyPersons" ,['donor_follower'=>$donor_follower,'posts'=>$posts,'charities'=>$charities,'followings'=>$followings]) ;
     }
 
 

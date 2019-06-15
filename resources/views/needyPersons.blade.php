@@ -48,6 +48,7 @@
 
       <div class="panel-body chat_body" style="margin-bottom:0px;top:0px;">
      @if(session()->has('donor_id') || session()->has('charity_id'))
+
       @if(empty($followings[0]))
          <div class="alert alert-primary text-center">يمكنك متابعة الجمعيات والتواصل معهم لمساعدة الحالات</div>
       @else
@@ -56,7 +57,7 @@
           <div class="col-sm-1" style="padding:0;margin:0"><i class="fa fa-comment charity_chat" aria-hidden="true" href="#charities_model" type="" data-id="PostId" data-toggle="modal" style="color:#cdd20a;padding-left: 7px;cursor: pointer;margin-left: 5px;font-size:20px"></i></div>
           <div class="col-sm-8 name"  style=" text-align: center;padding-right: 5px;">
            <a href="{{ url('/profile/'. $charity->id )}}">
-            <span class="chat_charity_name pull-right" style="font-size:11px"><b>{{$charity->name}}</b></span>
+            <span class="chat_charity_name pull-right" ch_id="{{$charity->id}}" style="font-size:11px"><b>{{$charity->name}}</b></span>
            </a>
           </div>
           <div class="col-sm-3 img" style="padding-left: 5px;">
@@ -67,7 +68,27 @@
         </div>
       <hr>
       @endforeach
-     @endif
+              @endif
+              @if(session()->has("charity_id"))
+
+           @foreach($donor_follower as $donor)
+                  <div class="row">
+                      <div class="col-sm-1" style="padding:0;margin:0"><i class="fa fa-comment charity_chat" aria-hidden="true" href="#charities_model" type="" data-id="PostId" data-toggle="modal" style="color:#cdd20a;padding-left: 7px;cursor: pointer;margin-left: 5px;font-size:20px"></i></div>
+                      <div class="col-sm-8 name"  style=" text-align: center;padding-right: 5px;">
+                          <a href="#">
+                              <span class="chat_charity_name pull-right" ch_id="{{$donor->id}}" style="font-size:11px"><b>{{$donor->name}}</b></span>
+                          </a>
+                      </div>
+                      <div class="col-sm-3 img" style="padding-left: 5px;">
+                          <a href="#">
+                              <img src="{{asset('avatar/userphoto.png')}}" style="height:35px;width:100%">
+                          </a>
+                      </div>
+                  </div>
+                  <hr>
+           @endforeach
+                  @endif
+
     @else
      <a  href="{{url('/login')}}" class="" style="color:#fff"><div class="alert alert-primary text-center">يمكنك متابعة الجمعيات والتواصل معهم لمساعدة الحالات</div></a>
     @endif
@@ -305,7 +326,8 @@
                                    <div class="col-sm-1 col-xs-2" style="padding:0;margin:0"><i class="fa fa-comment charity_chat" style="color:#cdd20a;padding-left: 7px;cursor: pointer;margin-left: 5px;font-size:20px"></i></div>
                                    <div class="col-sm-8 col-xs-7 name">
                                     <a href="{{ url('/profile/'. $charity->id )}}">
-                                     <span class="chat_charity_name pull-right" style="font-size:11px"><b>{{$charity->name}}</b></span>
+                                     <span class="chat_charity_name pull-right" ch_id="{{$charity->id}}" style="font-size:11px"><b>{{$charity->name}}</b></span>
+                                        <span class="pull-left box_number_msg" id="box_number_{{$charity->id}}"  ch_id="{{$charity->id}}" style="font-size:11px"></span>
                                    </a>
                                    </div>
                                    <div class="col-sm-3 col-xs-3 img">
@@ -317,6 +339,25 @@
                                  </div>
                                @endforeach
 
+                                    @foreach($donor_follower as $follower)
+                                        <div style="cursor:pointer">
+                                            <div class="row">
+                                                <div class="col-sm-1 col-xs-2" style="padding:0;margin:0"><i class="fa fa-comment charity_chat" style="color:#cdd20a;padding-left: 7px;cursor: pointer;margin-left: 5px;font-size:20px"></i></div>
+                                                <div class="col-sm-8 col-xs-7 name">
+                                                    <a href="#">
+                                                        <span class="chat_charity_name pull-right" ch_id="{{$follower->id}}" style="font-size:11px"><b>{{$follower->name}}</b></span>
+                                                        <span class="pull-left box_number_msg" id="box_number_{{$follower->id}}"  ch_id="{{$follower->id}}" style="font-size:11px"></span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-sm-3 col-xs-3 img">
+                                                    <a href="#">
+                                                        <img src="{{asset('avatar/userphoto.png')}}" style="height:35px;width:100%">
+                                                    </a>
+                                                </div>
+                                            </div><hr>
+                                        </div>
+                                    @endforeach
+
                                </div>
                              </div>
                              <!--Chat-->
@@ -326,10 +367,11 @@
                                   <div class='col-sm-9 col-xs-8' style="padding-right:8px;"><span class="pull-right"style="margin:15px auto"></span></div>
                                   <div class='col-sm-3 col-xs-4' style="padding:0;height: 100%"></div>
                                 </div>
-                                <div class="panel-body" id="ch_body" style="height: 238px">
-
+                                <div class="panel-body" id="ch_body" style="height: 238px;overflow-y: scroll">
+                                    <div id="broadcast" style="height: 20px" > <span class="broadcast"></span></div>
                                 </div>
-                                <div class="panel-footer" style="padding:0px;">
+
+                                <div class="panel-footer writing_msg" style="padding:0px;">
                                     <textarea type="text" name='chat' id="message" class='form-control has-feedback' rows="1"  cols="18" wrap="soft" style="width:100%;padding:15px;overflow:hidden;border:none; resize:none;bottom:0;background: #f5f5f5" dir='rtl' Placeholder="ارسل رسالة..." required></textarea>
                                 </div>
                               </div>
@@ -346,6 +388,33 @@
 
                </div>
 <!-- End Popup --->
+<style>
+
+    .msg-left{
+        position:relative;
+        background:#e2e2e2;
+        padding:5px;
+        min-height:10px;
+        margin-bottom:5px;
+        margin-right:10px;
+        border-radius:5px;
+        word-break: break-all;
+    }
+
+    .msg-right{
+        background:#d4e7fa;
+        padding:5px;
+        min-height:15px;
+        margin-bottom:5px;
+        position:relative;
+        margin-left:10px;
+        border-radius:5px;
+        word-break: break-all;
+    }
+    .box_number_msg{
+        color: #0000cc;
+    }
+</style>
 
 
 <script>
@@ -364,8 +433,18 @@
     }
   });
 </script>
-
+<script src="{{url('/js/chatScript.js')}}"></script>
 <script>
+    @if(session()->has("charity_id"))
+    var user_id="{{session()->get("charity_id")}}";
+    var username="{{session()->get("name")}}";
+    @elseif(session()->has("donor_id"))
+    var user_id="{{session()->get("donor_id")}}";
+    var username="{{session()->get("name")}}";
+    @endif
+    var token="{{csrf_token()}}";
+    var typing="{{url("images/typing.gif")}}";
+    var url="{{url("/")}}";
 $(document).ready(function(){
 
   ///Follow
@@ -411,11 +490,32 @@ $(document).ready(function(){
 
   $(".charity_chat").on('click',function(){
       var charityName = $(this).parent().siblings(".name").children().children(".chat_charity_name").html();
+      var charityID = $(this).parent().siblings(".name").children().children(".chat_charity_name").attr("ch_id");
       var charityImg = $(this).parent().siblings(".img").children().children().attr('src');
       $("#message").parent(".panel-footer").removeClass("hidden");
+      $.ajax({
+          url:url+"/get/message",
+          type:'post',
+          dataType:'json',
+          data:{_token:token,me:user_id,him:charityID},
+          success:function (data) {
+              var mes="";
+               for (var i=0;i<data["messages"].length;i++){
+                   if(data["messages"][i]["from_id"]==user_id){
+
+                       mes+="<div class='msg-right'>"+username+":"+data["messages"][i]["message"]+"</div>";
+                   }else if (data["messages"][i]["from_id"]==charityID){
+                       mes+="<div class='msg-left'>"+charityName+":"+data["messages"][i]["message"]+"</div>";
+                   }
+               }
+               document.getElementById("ch_body").innerHTML=mes+document.getElementById("ch_body").innerHTML;
+              $('#ch_body').scrollTop($('#ch_body')[0].scrollHeight);
+          }
+
+      });
 
         $("#appendnewChat").children().children(".panel-heading").children("div:eq(0)").children("span").html(charityName).css('color',"#fff");
-        $("#appendnewChat").children().children(".panel-heading").children("div:eq(1)").html("<img src='"+charityImg+"'>");
+      $("#appendnewChat").children().children(".panel-heading").children("div:eq(1)").html("<img class='box_"+charityID+" charity_chat_img' ch_id='"+charityID+"' src='"+charityImg+"'>");
         $("#appendnewChat img").css({
 
           "height":"100%",
@@ -448,3 +548,5 @@ $(document).ready(function(){
     })
     // Add any thing in file
       </script>
+<script src="{{url('/js/chatScript.js')}}"></script>
+<script src="{{url('js/socket.io.js')}}"></script>

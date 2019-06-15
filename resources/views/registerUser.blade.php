@@ -61,7 +61,10 @@
         <input type="name" name="name" class="form-control" placeholder="الاسم">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>-->
-
+      <div class="form-group has-feedback">
+        <input type="text" name="name" class="form-control" placeholder="الاسم">
+        <span style="color: #2d958b;" class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
       <div class="form-group has-feedback">
         <input type="email" name="email" class="form-control" placeholder="البريد الإلكترونى">
         <span style="color: #2d958b;" class="glyphicon glyphicon-envelope form-control-feedback"></span>

@@ -13,6 +13,7 @@ class donorController extends Controller
         $confirm=\request('confirm');
         $data=$this->validate(\request(),[
             'email'=>'required|email|unique:donors',
+            'name'=>'required|string|max:50|min:6',
             'password'=>'required|string|min:6',
         ]);
         if ($confirm==$data['password']){

@@ -15,8 +15,9 @@ class CreateCharityCharitiesTable extends Migration
     {
       if(!Schema::hasTable('charity__charities')){
         Schema::create('charity__charities', function (Blueprint $table) {
-            $table->integer('charityid');
-            $table->integer("followingid");
+
+            $table->integer('charityid')->unsigned();
+            $table->integer("followingid")->unsigned();
             $table->primary(['charityid','followingid']);
             $table->foreign('charityid')->references('id')->on('charities')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('followingid')->references('id')->on('charities')->onUpdate('cascade')->onDelete('cascade');

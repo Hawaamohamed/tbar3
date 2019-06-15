@@ -24,9 +24,11 @@ Route::middleware('jwt.charity')->get('/profile',function (Request $request){
 Route::post('/register/charity','APIController@registerCharity');
 Route::post('/register/donor','APIController@registerDonor');
 Route::post('/login','APIController@login');
-
+Route::post('/reset/password', 'APIController@resetPassword');
 Route::middleware('jwt.charity')->get('/profile','APIController@showProfile');
 Route::middleware('jwt.charity')->post('/profile/updateCharity','APIController@updateCharity');
 Route::middleware('jwt.charity')->post('/profile/addPost','PostsAPIController@store');
 Route::middleware('jwt.charity')->post('/profile/deletePost','PostsAPIController@delete');
 Route::middleware('jwt.charity')->post('/profile/updatePost','PostsAPIController@update');
+Route::middleware('jwt.charity')->post('/send/message','ChatController@sendMessage');
+Route::middleware('jwt.charity')->post('/get/message','ChatController@getMessage');

@@ -175,5 +175,39 @@ class APIController extends Controller
 
         return response()->json(['success'=> 'Data Updated'],200);
     }
+        public function resetPassword(){
 
+            if (\request('type')=='1')
+            {
+                $charity=Charity::where('email',\request('email'))->first();
+                if (!empty($charity)){
+                    $token=app('auth.password.broker')->createToken($charity);
+                    $data=DB::table('password_resets')->insert([
+                        'email'=>$charity->email,
+                        'token'=>$token,
+                        'created_at'=>Carbon::now()
+                    ]);
+                    //return new ResetPassword(['data'=>$charity,'token'=>$token,'type'=>'charity']);
+                     Mail::to($charity->email)->send(new ResetPassword(['data'=>$charity,'token'=>$token]));
+                    return response()->json(['email_sent'=> 'The Email is sent, Please Check Your Email '],200);
+                }
+            }
+            elseif (\request('type')=='2')
+            {
+                $donor=Donor::where('email',\request('email'))->first();
+                if (!empty($donor)){
+                    $token=app('auth.password.broker')->createToken($donor);
+                    $data=DB::table('password_resets')->insert([
+                        'email'=>$donor->email,
+                        'token'=>$token,
+                        'created_at'=>Carbon::now()
+                    ]);
+                   // return new ResetPassword(['data'=>$donor,'token'=>$token,'type'=>'donor']);
+                      Mail::to($donor->email)->send(new ResetPassword(['data'=>$donor,'token'=>$token]));
+                    return response()->json(['email_sent'=> 'The Email is sent, Please Check Your Email '],200);
+
+                }
+            }
+
+        }
 }

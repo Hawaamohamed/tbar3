@@ -22,7 +22,7 @@
 <script src="{{ url("/design/card/card.js") }}"></script>
 <script src="{{ url("/design/colo/js/wow.min.js") }}"></script>
 <script>new WOW().init();</script>
-<script>
+
 <script>
 	var textarea = document.querySelector('textarea');
 

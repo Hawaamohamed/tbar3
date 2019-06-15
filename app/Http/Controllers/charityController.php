@@ -61,7 +61,9 @@ class charityController extends Controller
         {
             if (auth()->guard('donor')->attempt(['email' => request('email'), 'password' => request('password')])) {
                 $id = DB::table('donors')->where('email', request('email'))->value('id');
+                $donor = Donor::find($id);
                 session()->put('donor_id', $id);
+                session()->put('name', $donor->name);
                 session()->put('auth', 1);
 
                   $donor = Donor::find($id);

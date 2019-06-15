@@ -71,3 +71,5 @@ Route::get('/session/{id}', function ($id)
 {
     session()->put( "donate" , $id ) ;
 });
+Route::post('/send/message', 'ChatController@send_message');
+Route::post('/get/message', 'ChatController@get_message');
