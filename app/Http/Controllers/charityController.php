@@ -154,7 +154,14 @@ class charityController extends Controller
     {
         $charity = Charity::find($id);
         $posts = $charity->posts()->orderBy('id', 'DESC')->get();
-
         return view("profile",compact('charity',"posts") ) ;
     }
+    
+    public  function details($id)
+    {
+        $charity = Charity::find($id);
+        $posts = $charity->posts()->orderBy('id', 'DESC')->get();
+        return view("detailsPosts",compact('charity',"posts") ) ;
+    }
+
 }

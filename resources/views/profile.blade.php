@@ -128,6 +128,7 @@
             @if( $charity->id == session()->get("charity_id"))
                 <!-- <a href="#" class="text-center center-block" style="color: lightseagreen;font-size:15px;margin:10px 0">تفاصيل المنشورات</a> -->
                     <a href="{{route('update_ch',$charity->id)}}" class="text-center center-block" style="color: lightseagreen;font-size:15px;margin:10px 0">تعديل بيانات الجمعية</a>
+                    <a href="{{route('details',$charity->id)}}" class="text-center center-block" style="color: lightseagreen;font-size:15px;margin:10px 0">تفاصيل المنشورات</a>
                 @endif
             </div>
 

@@ -43,6 +43,7 @@ Route::get( "/profile/{id}" , 'charityController@showProfile' )->name('show') ;
 
 Route::group( ['middleware' => 'charity' ] , function (){
 
+    Route::get('details/{id?}','charityController@details')->name('details');
 
     /**************************  Update Data charity ***************************/
     Route::get('update_ch/{id?}','UpdataDataCharity@show')->name('update_ch');
