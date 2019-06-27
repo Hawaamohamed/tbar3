@@ -1,6 +1,7 @@
 function user_status(class1,class2){
     var stat=['online','offline'];
     $.each(stat,function (k,v) {
+      //alert(class1)
         $('.'+class1).removeClass(v);
     });
     $('.'+class1).addClass(class2);
@@ -8,7 +9,7 @@ function user_status(class1,class2){
 
 $(document).ready(function(){
     var my_list=[];
-    $('.pageChat').each(function () {
+    $('.chat_charity_name').each(function () {
         var uid=$(this).attr('ch_id');
         my_list.push(uid);
     });
@@ -25,7 +26,7 @@ $(document).ready(function(){
     });
 
     socket.on('connect',function (data) {
-        $('.pageChat').each(function () {
+        $('.chat_charity_name').each(function () {
             var uid=$(this).attr('ch_id');
             socket.emit('check_online',{
                 user_id:'user_'+uid

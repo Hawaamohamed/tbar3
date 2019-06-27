@@ -54,7 +54,7 @@
       @else
        @foreach($followings as $charity)
           <div class="row">
-          <div class="col-sm-1" style="padding:0;margin:0"><i class="fa fa-comment charity_chat" aria-hidden="true" href="#charities_model" type="" data-id="PostId" data-toggle="modal" style="color:#cdd20a;padding-left: 7px;cursor: pointer;margin-left: 5px;font-size:20px"></i></div>
+          <div class="col-sm-1" style="padding:0;margin:0"><i id="" class="fa fa-comment user_{{$charity->id}} charity_chat offline" aria-hidden="true" href="#charities_model" type="" data-id="PostId" data-toggle="modal" style="padding-left: 7px;cursor: pointer;margin-left: 5px;font-size:20px"></i></div>
           <div class="col-sm-8 name"  style=" text-align: center;padding-right: 5px;">
            <a href="{{ url('/profile/'. $charity->id )}}">
             <span class="chat_charity_name pull-right" ch_id="{{$charity->id}}" style="font-size:11px"><b>{{$charity->name}}</b></span>
@@ -73,7 +73,7 @@
 
            @foreach($donor_follower as $donor)
                   <div class="row">
-                      <div class="col-sm-1" style="padding:0;margin:0"><i class="fa fa-comment charity_chat" aria-hidden="true" href="#charities_model" type="" data-id="PostId" data-toggle="modal" style="color:#cdd20a;padding-left: 7px;cursor: pointer;margin-left: 5px;font-size:20px"></i></div>
+                      <div class="col-sm-1" style="padding:0;margin:0"><i id="" class="fa fa-comment user_{{$donor->id}} charity_chat offline" aria-hidden="true" href="#charities_model" type="" data-id="PostId" data-toggle="modal" style="padding-left: 7px;cursor: pointer;margin-left: 5px;font-size:20px"></i></div>
                       <div class="col-sm-8 name"  style=" text-align: center;padding-right: 5px;">
                           <a href="#">
                               <span class="chat_charity_name pull-right" ch_id="{{$donor->id}}" style="font-size:11px"><b>{{$donor->name}}</b></span>
@@ -323,7 +323,7 @@
                                 @foreach($followings as $charity)
                                  <div style="cursor:pointer">
                                    <div class="row">
-                                   <div class="col-sm-1 col-xs-2" style="padding:0;margin:0"><i class="fa fa-comment charity_chat" style="color:#cdd20a;padding-left: 7px;cursor: pointer;margin-left: 5px;font-size:20px"></i></div>
+                                   <div class="col-sm-1 col-xs-2" style="padding:0;margin:0"><i id=""  class="fa fa-comment user_{{$charity->id}} charity_chat offline" style="padding-left: 7px;cursor: pointer;margin-left: 5px;font-size:20px"></i></div>
                                    <div class="col-sm-8 col-xs-7 name">
                                     <a href="{{ url('/profile/'. $charity->id )}}">
                                      <span class="chat_charity_name pull-right" ch_id="{{$charity->id}}" style="font-size:11px"><b>{{$charity->name}}</b></span>
@@ -342,7 +342,7 @@
                                     @foreach($donor_follower as $follower)
                                         <div style="cursor:pointer">
                                             <div class="row">
-                                                <div class="col-sm-1 col-xs-2" style="padding:0;margin:0"><i class="fa fa-comment charity_chat" style="color:#cdd20a;padding-left: 7px;cursor: pointer;margin-left: 5px;font-size:20px"></i></div>
+                                                <div class="col-sm-1 col-xs-2" style="padding:0;margin:0"><i id=""  class="fa fa-comment charity_chat user_{{$follower->id}} offline" style="padding-left: 7px;cursor: pointer;margin-left: 5px;font-size:20px"></i></div>
                                                 <div class="col-sm-8 col-xs-7 name">
                                                     <a href="#">
                                                         <span class="chat_charity_name pull-right" ch_id="{{$follower->id}}" style="font-size:11px"><b>{{$follower->name}}</b></span>
@@ -389,6 +389,12 @@
                </div>
 <!-- End Popup --->
 <style>
+.offline{
+    color: gray;
+}
+.online{
+    color:green;
+}
 
     .msg-left{
         position:relative;
@@ -508,7 +514,7 @@ $(document).ready(function(){
                        mes+="<div class='msg-left'>"+charityName+":"+data["messages"][i]["message"]+"</div>";
                    }
                }
-               document.getElementById("ch_body").innerHTML=mes+document.getElementById("ch_body").innerHTML;
+               document.getElementById("ch_body").innerHTML=mes;
               $('#ch_body').scrollTop($('#ch_body')[0].scrollHeight);
           }
 

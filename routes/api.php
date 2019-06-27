@@ -32,3 +32,7 @@ Route::middleware('jwt.charity')->post('/profile/deletePost','PostsAPIController
 Route::middleware('jwt.charity')->post('/profile/updatePost','PostsAPIController@update');
 Route::middleware('jwt.charity')->post('/send/message','ChatController@sendMessage');
 Route::middleware('jwt.charity')->post('/get/message','ChatController@getMessage');
+Route::middleware('jwt.charity')->post('/pull/new/message','ChatController@pull_new_message');
+Route::middleware('jwt.charity')->post('/push/new/message','ChatController@push_new_message');
+Route::middleware('jwt.charity')->post('/profile/updateProfile','APIController@update_profile');
+Route::middleware('jwt.charity')->post('/profile/updateCover','APIController@update_cover');

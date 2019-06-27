@@ -210,4 +210,83 @@ class APIController extends Controller
             }
 
         }
+
+    public function update_profile(Request $request)
+    {
+        $charity= \Tymon\JWTAuth\Facades\JWTAuth::parseToken()->toUser();
+        //$chid = $request->input('charity_id');
+        //$charity=Charity::find($chid);
+        $validation = Validator::make($request->all(), [
+            'select_file' => 'required|image|mimes:jpeg,png,jpg,gif,JPG,PNG,JPEG,GIF'
+        ]);
+        if($validation->passes())
+        {
+            if($charity->profile != 'pro.jpg')
+            {
+                unlink(public_path() .  '/avatar/' . $charity->profile );
+            }
+
+            $image = $request->file('select_file');
+            $new_name = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('avatar'), $new_name);
+
+            $charity->profile=$new_name;
+            $charity->save();
+
+
+
+
+            return response()->json([
+                'message'   => 'Image Upload Successfully',
+                'uploaded_image' => $new_name,
+                'class_name'  => 'alert-success'
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'message'   => $validation->errors()->all(),
+                'uploaded_image' => 'no-image.jpg',
+                'class_name'  => 'alert-danger'
+            ]);
+        }
+    }
+    public function update_cover(Request $request)
+    {
+        $charity= \Tymon\JWTAuth\Facades\JWTAuth::parseToken()->toUser();
+        //$chid = $request->input('charity_id');
+        //$charity=Charity::find($chid);
+        $validation = Validator::make($request->all(), [
+            'select_file' => 'required|image|mimes:jpeg,png,jpg,gif,JPG,PNG,JPEG,GIF'
+        ]);
+        if($validation->passes())
+        {
+            if($charity->cover != 'cover.jpg')
+            {
+                unlink(public_path() .  '/avatar/' . $charity->cover );
+            }
+            $image = $request->file('select_file');
+            $new_name = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('avatar'), $new_name);
+
+            $charity->cover=$new_name;
+
+            $charity->save();
+
+            return response()->json([
+                'message'   => 'Image Upload Successfully',
+                'uploaded_image' => $new_name,
+                'class_name'  => 'alert-success'
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'message'   => $validation->errors()->all(),
+                'uploaded_image' => '',
+                'class_name'  => 'alert-danger'
+            ]);
+        }
+    }
+
 }
